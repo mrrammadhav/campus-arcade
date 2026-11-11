@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Code Breaker</title><link rel="stylesheet" href="../css/style.css"></head><body><div class="wrap"><div class="top"><a class="back" href="../index.html">← Shelf</a><h1>Code Breaker</h1></div>
+<div class="stage"><div class="hud" id="h"></div><input id="g" maxlength="4" inputmode="numeric" placeholder="1234" autocomplete="off"> <button class="btn" id="b">Guess</button><br><pre id="log" style="text-align:left;display:inline-block;min-width:260px;font-size:18px"></pre></div>
+</div><script src="../js/games.js"></script>
+<script>
+const h=document.getElementById('h'),g=document.getElementById('g'),b=document.getElementById('b'),log=document.getElementById('log');
+let sec,tries,done;
+function newGame(){sec=[0,1,2,3,4,5,6,7,8,9].sort(()=>Math.random()-.5).slice(0,4).join('');tries=0;done=false;log.textContent='';g.value='';
+ h.textContent='Crack the 4-digit code. All digits are different. 8 tries.';g.focus()}
+function guess(){
+ if(done){newGame();return}
+ const v=g.value;if(!/^\d{4}$/.test(v)||new Set(v).size<4){h.textContent='Enter 4 different digits.';return}
+ tries++;let a=0,c=0;
+ for(let i=0;i<4;i++){if(v[i]===sec[i])a++;else if(sec.includes(v[i]))c++}
+ log.textContent+=`${tries}. ${v}   ●${a}  ○${c}\n`;g.value='';
+ if(a===4){done=true;h.textContent=`Cracked in ${tries}! Press Guess for a new code.`;best.set('code-breaker',tries)}
+ else if(tries>=8){done=true;h.textContent=`Out of tries. The code was ${sec}. Press Guess to retry.`}
+ else h.textContent=`● right digit, right spot. ○ right digit, wrong spot. ${8-tries} left.`}
+b.onclick=guess;g.onkeydown=e=>{if(e.key==='Enter')guess()};newGame();
+</script></body></html>

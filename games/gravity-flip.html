@@ -1,0 +1,24 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gravity Flip</title><link rel="stylesheet" href="../css/style.css"></head><body><div class="wrap"><div class="top"><a class="back" href="../index.html">← Shelf</a><h1>Gravity Flip</h1></div>
+<div class="stage"><div class="hud" id="h"></div><canvas id="cv" width="640" height="300"></canvas><p>Space or tap flips gravity.</p></div>
+</div><script src="../js/games.js"></script>
+<script>
+const cv=document.getElementById('cv'),x=cv.getContext('2d'),H=document.getElementById('h');
+let p,o,f,sp,over,sc;
+function reset(){p={y:270,v:0,g:1};o=[];f=0;sp=4;sc=0;over=false}
+function flip(){if(over)reset();else p.g*=-1}
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();flip()}});
+cv.addEventListener('pointerdown',flip);
+function step(){
+ if(!over){f++;sc=Math.floor(f/6);sp=4+f/600;
+  p.v+=p.g*.9;p.y+=p.v;if(p.y>270){p.y=270;p.v=0}if(p.y<0){p.y=0;p.v=0}
+  if(f%Math.max(35,80-Math.floor(f/60))===0)o.push({x:640,w:30,h:50+Math.random()*60,top:Math.random()<.5});
+  o.forEach(b=>b.x-=sp);o=o.filter(b=>b.x>-40);
+  for(const b of o){const by=b.top?0:300-b.h;
+   if(80<b.x+b.w&&110>b.x&&p.y<by+b.h&&p.y+30>by){over=true;best.set('gravity-flip',sc)}}}
+ x.clearRect(0,0,640,300);x.fillStyle='#ff5d73';
+ o.forEach(b=>x.fillRect(b.x,b.top?0:300-b.h,b.w,b.h));
+ x.fillStyle='#3de0d0';x.fillRect(80,p.y,30,30);
+ H.textContent=over?`Game over: ${sc} pts. Tap or press Space to retry.`:`Score ${sc} | Best ${best.get('gravity-flip')||0}`;
+ requestAnimationFrame(step)}
+reset();step();
+</script></body></html>

@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Typing Rush</title><link rel="stylesheet" href="../css/style.css"></head><body><div class="wrap"><div class="top"><a class="back" href="../index.html">← Shelf</a><h1>Typing Rush</h1></div>
+<div class="stage"><div class="hud" id="h"></div><canvas id="cv" width="640" height="360"></canvas><br><br><input id="i" placeholder="Type here" autocomplete="off" autocapitalize="off"><p>Type a word to blast it. Press Enter after game over to restart.</p></div>
+</div><script src="../js/games.js"></script>
+<script>
+const W='array loop stack queue git push pull merge python java debug compile syntax linux kernel binary pointer lambda react node async cache query index schema deploy commit branch docker server thread socket regex token proxy hash bug'.split(' ');
+const cv=document.getElementById('cv'),x=cv.getContext('2d'),H=document.getElementById('h'),I=document.getElementById('i');
+let ws,lives,sc,t,over;
+function reset(){ws=[];lives=3;sc=0;t=0;over=false;I.value='';I.focus()}
+I.oninput=()=>{const i=ws.findIndex(o=>o.w===I.value.trim().toLowerCase());if(i>-1){ws.splice(i,1);sc++;I.value=''}};
+I.onkeydown=e=>{if(e.key==='Enter'&&over)reset()};
+function step(){
+ if(!over){t++;
+  if(t%Math.max(35,100-sc*2)===0)ws.push({w:W[Math.floor(Math.random()*W.length)],x:10+Math.random()*520,y:0});
+  ws.forEach(o=>o.y+=.6+sc*.02);
+  ws=ws.filter(o=>{if(o.y>350){lives--;return false}return true});
+  if(lives<=0){over=true;best.set('typing-rush',sc)}}
+ x.clearRect(0,0,640,360);x.font='22px monospace';x.fillStyle='#f3efe6';
+ ws.forEach(o=>x.fillText(o.w,o.x,o.y+20));
+ H.textContent=over?`Game over: ${sc} words.`:`Words ${sc} | Lives ${'♥'.repeat(lives)} | Best ${best.get('typing-rush')||0}`;
+ requestAnimationFrame(step)}
+reset();step();
+</script></body></html>

@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Memory Matrix</title><link rel="stylesheet" href="../css/style.css"><style>#gr{display:inline-grid;grid-template-columns:repeat(5,60px);gap:8px}.t{width:60px;height:60px;border:0;border-radius:8px;background:#2d2a5c;cursor:pointer}.t.on{background:#ffd24a}.t.ok{background:#3de0d0}.t.bad{background:#ff5d73}</style></head><body><div class="wrap"><div class="top"><a class="back" href="../index.html">← Shelf</a><h1>Memory Matrix</h1></div>
+<div class="stage"><div class="hud" id="h"></div><div id="gr"></div><br><button class="btn" id="r">Restart</button></div>
+</div><script src="../js/games.js"></script>
+<script>
+const h=document.getElementById('h'),gr=document.getElementById('gr');
+const cells=[...Array(25)].map((_,i)=>{const c=document.createElement('button');c.className='t';c.setAttribute('aria-label','tile '+(i+1));c.onclick=()=>pick(i);gr.append(c);return c});
+let lvl,ans,sel,phase,run=0;
+function next(){phase='show';ans=new Set();while(ans.size<lvl+2)ans.add(Math.floor(Math.random()*25));sel=new Set();
+ cells.forEach((c,i)=>c.className='t'+(ans.has(i)?' on':''));h.textContent=`Level ${lvl}: memorize the tiles!`;const r=run;
+ setTimeout(()=>{if(r!==run)return;cells.forEach(c=>c.className='t');phase='play';h.textContent='Tap the tiles you saw.'},900+lvl*150)}
+function pick(i){if(phase!=='play'||sel.has(i))return;
+ if(ans.has(i)){cells[i].className='t ok';sel.add(i);
+  if(sel.size===ans.size){best.set('memory-matrix',lvl);lvl++;phase='wait';h.textContent='Nice!';const r=run;setTimeout(()=>{if(r===run)next()},700)}}
+ else{cells[i].className='t bad';phase='over';ans.forEach(a=>cells[a].classList.add('on'));h.textContent=`Wrong tile. You cleared ${lvl-1} levels.`}}
+function start(){run++;lvl=1;next()}
+document.getElementById('r').onclick=start;start();
+</script></body></html>

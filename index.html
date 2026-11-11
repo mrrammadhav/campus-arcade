@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campus Arcade</title><link rel="stylesheet" href="css/style.css"></head><body><div class="wrap">
+<div class="top"><h1>Campus Arcade</h1><span>Pick a game off the shelf.</span></div>
+<div class="shelf" id="s"></div></div>
+<script src="js/games.js"></script>
+<script>
+document.getElementById('s').innerHTML=GAMES.map(g=>{const b=best.get(g.id);
+return `<a class="case" style="--k:${g.k}" href="games/${g.id}.html"><div class="e">${g.e}</div><h2>${g.name}</h2><p>${g.d}</p>${b!==null?`<small>Best: ${b} ${g.unit}</small>`:''}</a>`}).join('');
+</script></body></html>

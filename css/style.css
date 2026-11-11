@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;700&display=swap');
+:root{--bg:#14122b;--ink:#f3efe6;--a:#ff5d73;--b:#3de0d0;--c:#ffd24a;--card:#221f47}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Space Grotesk',system-ui,sans-serif}
+h1,h2{font-family:Bungee,Impact,sans-serif;font-weight:400;margin:0}
+.wrap{max-width:960px;margin:0 auto;padding:24px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.back{color:var(--ink);text-decoration:none;border:2px solid var(--ink);padding:6px 14px;border-radius:8px}
+.back:hover,.back:focus-visible{background:var(--ink);color:var(--bg);outline:none}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:36px 22px;margin-top:32px}
+.case{display:block;color:var(--ink);text-decoration:none;background:var(--card);border-radius:6px 6px 0 0;padding:16px;min-height:220px;border-top:8px solid var(--k);position:relative;transition:transform .15s}
+.case:hover,.case:focus-visible{transform:translateY(-8px);outline:none}
+.case:after{content:"";position:absolute;left:-10px;right:-10px;bottom:-12px;height:12px;background:#4a3a2a;border-radius:3px}
+.case .e{font-size:42px}
+.case h2{font-size:19px;margin:8px 0}
+.case p{font-size:14px;opacity:.85;margin:0}
+.case small{display:block;margin-top:10px;color:var(--k);font-weight:700}
+.stage{margin-top:18px;text-align:center}
+canvas{width:100%;max-width:640px;background:#0d0b20;border:3px solid var(--ink);border-radius:10px;touch-action:none}
+button,input{font:inherit}
+.btn{background:var(--a);color:#fff;border:0;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:700}
+.btn:focus-visible,input:focus-visible{outline:3px solid var(--c)}
+input{padding:10px;border-radius:8px;border:2px solid var(--ink);background:#0d0b20;color:var(--ink)}
+.hud{margin:10px 0;font-weight:700;min-height:1.5em}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
